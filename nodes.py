@@ -36,7 +36,10 @@ class ImageLoadFromBase64:
             _, base64_string = base64_string.split(",", 1)
         decoded_bytes = base64.b64decode(base64_string)
         file_like_object = BytesIO(decoded_bytes)
-        img = Image.open(file_like_object)
+        try: 
+            img = Image.open(file_like_object)
+        except:
+            return (None, None)
 
         output_images = []
         output_masks = []
@@ -307,6 +310,31 @@ class ImageSaveAsBase64:
 
         return { "ui": { "images": results } }
     
+class VHSFileNamesToStrings:
+    def __init__(self):
+        self.type = "output"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "vhs_filenames": ("VHS_FILENAMES", {}),
+            },
+        }
+
+    RETURN_TYPES = ()
+
+    FUNCTION = "main"
+
+    OUTPUT_NODE = True
+
+    CATEGORY = "io_helpers"
+
+    def main(
+            self, 
+            vhs_filenames:tuple):
+
+        return { "ui": { "file_paths": vhs_filenames[1] } }
     
 class TypeConversion:
     def __init__(self) -> None:
@@ -329,6 +357,7 @@ class TypeConversion:
                 }),
                 "float_value": ("FLOAT", {
                     "default": None,
+                    "step": 0.001
                 })
             }
         }
@@ -366,5 +395,6 @@ NODE_CLASS_MAPPINGS = {
     'ImageLoadAsMaskByPath(IOHelpers)': ImageLoadAsMaskByPath,
     'ImageSaveToPath(IOHelpers)': ImageSaveToPath,
     'ImageSaveAsBase64(IOHelpers)': ImageSaveAsBase64,
+    'VHSFileNamesToStrings(IOHelpers)': VHSFileNamesToStrings,
     'TypeConversion(IOHelpers)': TypeConversion,
 }
