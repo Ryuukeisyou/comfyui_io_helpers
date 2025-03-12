@@ -1,0 +1,14 @@
+[project]
+name = "comfyui_io_helpers"
+description = "Nodes:ImageLoadFromBase64, ImageLoadByPath, ImageLoadAsMaskByPath, ImageSaveToPath, ImageSaveAsBase64."
+version = "1.0.0"
+license = "LICENSE"
+
+[project.urls]
+Repository = "https://github.com/Ryuukeisyou/comfyui_io_helpers"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "comfyui_io_helpers"
+Icon = ""
